@@ -8,7 +8,7 @@ const Omx = require('node-omxplayer')
 
 const player = new Omx()
 
-function setup(port, filePath){
+function setup(port, filePath, shouldLaunchKiosk){
 	// filepath points to a directory which contains the config.json
 	return new Promise((resolve, reject)=>{
 		var interface = {}
@@ -26,8 +26,11 @@ function setup(port, filePath){
 		
 		app.get('/api/data',(req, res)=>{
 			loadJSONFile(path.join(filePath,"/config.json")).then(data=>{
-				res.send(normalize(filePath, data))
+				const out = normalize(filePath, data)
+				console.log("requestedData:", out)
+				res.send(out)
 			}).catch(err=>{
+				console.error(err)
 				res.send({error:err})
 			})
 		})
@@ -44,7 +47,9 @@ function setup(port, filePath){
 		//launch the server, attaching it to the specified port.
 		app.listen(port, function(){
 			console.log(`Listening on port: localhost:${port}`)
-			LaunchChromeKiosk(`http://localhost:${port}`)
+			if(shouldLaunchKiosk){
+				LaunchChromeKiosk(`http://localhost:${port}`)
+			}
 			resolve(interface)
 		})
 
@@ -69,8 +74,24 @@ function loadJSONFile(filePath){
 }
 
 function normalize(filePath, obj){
+	
+	var output = Object.assign({}, obj)
+	
+	console.log("OUT:", output)
+	
+	output.files = output.files.map(normalizeFile)
+	
+	function normalizeFile(file){
+		var out = {}
+		out.thumb = file.thumb // passed as is
+		out.title = file.title // passed as is
+		out.path = path.join(filePath, file.path) // creates a fully realized path instead of a relative one (used to play on omxplayer)
+		return out
+	}
+	/*
 	return {
 		title:obj.title,
+		background:obj.background,
 		files:obj.files.map((file)=>{
 			var out = {}
 			out.thumb = file.thumb // passed as is
@@ -78,7 +99,11 @@ function normalize(filePath, obj){
 			out.path = path.join(filePath, file.path) // creates a fully realized path instead of a relative one (used to play on omxplayer)
 			return out
 		})
-	}
+	}*/
+	
+	console.log("norm:",output)
+	
+	return output
 }
 
 function LaunchChromeKiosk(url) {

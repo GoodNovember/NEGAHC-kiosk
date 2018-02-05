@@ -11,6 +11,7 @@ Inside the `config.json` file is the following:
 ```json
 	{
 		"title":"Large Text Appearing Above The Videos",
+		"background":"./path/to/images/bg.jpg",
 		"files":[
 			{
 				"path":"./path/to/videos/video1.mp4",
