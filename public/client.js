@@ -6,6 +6,7 @@ function LoadData(){
 			const title = document.getElementById('title')
 			const content = document.getElementById('content')
 			title.innerText = data.title
+			document.title = data.title
 			data.files.map((file)=>{
 				console.log(file)
 				var elm = document.createElement('div')
@@ -25,6 +26,8 @@ function LoadData(){
 				content.appendChild(elm)
 			})
 		}
+	}).catch((err)=>{
+		console.error(err)
 	})
 }
 LoadData()
