@@ -13,9 +13,9 @@ body{
 	padding: 8px;
 	min-height: 100vh;
 	-webkit-user-select: none;  
-    -moz-user-select: none;    
-    -ms-user-select: none;     
-    user-select: none; 
+    	-moz-user-select: none;    
+    	-ms-user-select: none;     
+    	user-select: none; 
 }
 
 #title{
@@ -23,9 +23,9 @@ body{
 	font-size:3em;
 	margin: 10px;
 	-webkit-user-select: none;  
-    -moz-user-select: none;    
-    -ms-user-select: none;     
-    user-select: none; 
+    	-moz-user-select: none;    
+    	-ms-user-select: none;     
+    	user-select: none; 
 }
 
 #content{
@@ -50,9 +50,9 @@ body{
 	align-items:center;
 	text-align:center;
 	-webkit-user-select: none;  
-    -moz-user-select: none;    
-    -ms-user-select: none;     
-    user-select: none; 
+    	-moz-user-select: none;    
+    	-ms-user-select: none;     
+    	user-select: none; 
 	transition: 3s;
 }
 

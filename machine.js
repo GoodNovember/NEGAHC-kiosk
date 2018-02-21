@@ -107,7 +107,10 @@ function normalize(filePath, obj){
 }
 
 function LaunchChromeKiosk(url) {
-    exec(`chromium-browser --kiosk --app-auto-launched ${url}`, function(error, stdout, stderr) {
+	
+	var params = "--kiosk --incognito --disable-pinch --overscroll-history-navigation=0 --app-auto-launched"
+	
+    exec(`chromium-browser ${params} ${url}`, function(error, stdout, stderr) {
         console.log("stdout: " + stdout)
         console.log("stderr: " + stderr)
         if (error !== null) {
